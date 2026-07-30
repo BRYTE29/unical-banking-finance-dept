@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Department of Banking &amp; Finance | University of Calabar</title>
+<meta name="description" content="Official portal of the Department of Banking and Finance, University of Calabar. Academics, resources, lecturers, and student services.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ===================================================================
+   DEPARTMENT OF BANKING & FINANCE — UNICAL
+   Design tokens
+   Royal Blue   #142E5C  (ledger-ink blue, deep and authoritative)
+   Royal Blue L #1D4587
+   Gold         #C9A227  (institutional gold, muted — not neon)
+   Gold Light   #E7C567
+   White        #FFFFFF
+   Light Gray   #F3F5F9
+   Ink          #0B1830  (dark mode base)
+   Signature motif: the "ledger line" — hairline rules, statement-style
+   numbering, a monospace figure face (Space Mono) for every number on
+   the page: stats, course codes, GPA figures, dates — echoing a bank
+   statement / account ledger.
+   =================================================================== */
+
+:root{
+  --royal: #142E5C;
+  --royal-l: #1D4587;
+  --royal-deep: #0B1E40;
+  --gold: #C9A227;
+  --gold-l: #E7C567;
+  --white: #FFFFFF;
+  --gray: #F3F5F9;
+  --gray-mid: #E3E7EF;
+  --ink: #16233B;
+  --muted: #5B6B85;
+  --radius: 14px;
+  --shadow-sm: 0 2px 10px rgba(20,46,92,.06);
+  --shadow-md: 0 10px 30px rgba(20,46,92,.10);
+  --shadow-lg: 0 24px 60px rgba(20,46,92,.16);
+  --font-display: 'Poppins', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --bg: var(--white);
+  --bg-alt: var(--gray);
+  --text: var(--ink);
+  --text-muted: var(--muted);
+  --card-bg: var(--white);
+  --border: var(--gray-mid);
+  --nav-bg: rgba(255,255,255,.85);
+  --transition: .35s cubic-bezier(.4,0,.2,1);
+}
+
+[data-theme="dark"]{
+  --bg: #0B1830;
+  --bg-alt: #0F2140;
+  --text: #EAF0FB;
+  --text-muted: #9FB0CC;
+  --card-bg: #101F3D;
+  --border: #1E3560;
+  --nav-bg: rgba(11,24,48,.85);
+  --gray: #0F2140;
+  --shadow-sm: 0 2px 10px rgba(0,0,0,.25);
+  --shadow-md: 0 10px 30px rgba(0,0,0,.35);
+  --shadow-lg: 0 24px 60px rgba(0,0,0,.45);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-display);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  transition:background var(--transition), color var(--transition);
+}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+.container{max-width:1240px;margin:0 auto;padding:0 24px;}
+.mono{font-family:var(--font-mono);}
+
+::selection{background:var(--gold);color:var(--royal-deep);}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--bg-alt);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
+
+/* ============ LOADER ============ */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--royal-deep);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;
+  transition:opacity .6s ease, visibility .6s ease;
+}
+#loader.hide{opacity:0;visibility:hidden;}
+.loader-mark{
+  width:64px;height:64px;border-radius:50%;
+  border:3px solid rgba(201,162,39,.25);
+  border-top-color:var(--gold);
+  animation:spin 1s linear infinite;
+}
+.loader-text{
+  color:var(--gold-l);
+  font-family:var(--font-mono);
+  letter-spacing:3px;
+  font-size:.8rem;
+  text-transform:uppercase;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* skeleton */
+.skeleton{
+  background:linear-gradient(90deg, var(--gray-mid) 25%, #f0f0f0 37%, var(--gray-mid) 63%);
+  background-size:400% 100%;
+  animation:skeleton 1.4s ease infinite;
+  border-radius:8px;
+}
+@keyframes skeleton{0%{background-position:100% 50%;}100%{background-position:0 50%;}}
+
+/* ============ TOP UTILITY BAR ============ */
+.topbar{
+  background:var(--royal-deep);
+  color:#cfd9ef;
+  font-size:.78rem;
+}
+.topbar .container{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 24px;flex-wrap:wrap;gap:6px;
+}
+.topbar .tb-left span{margin-right:18px;}
+.topbar .tb-left i{color:var(--gold);margin-right:6px;}
+.topbar .tb-right{display:flex;gap:14px;align-items:center;}
+.topbar .tb-right a{color:#cfd9ef;transition:color .2s;}
+.topbar .tb-right a:hover{color:var(--gold-l);}
+
+/* ============ NAVBAR ============ */
+header.site-header{
+  position:sticky;top:0;z-index:1000;
+  background:var(--nav-bg);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s, background var(--transition);
+}
+header.site-header.scrolled{box-shadow:var(--shadow-md);}
+nav.navbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;max-width:1240px;margin:0 auto;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{
+  width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(145deg,var(--royal),var(--royal-l));
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold-l);font-size:1.2rem;
+  box-shadow:var(--shadow-sm);
+  border:1px solid rgba(201,162,39,.4);
+}
+.brand-text .b-title{font-weight:700;font-size:1rem;letter-spacing:.2px;color:var(--text);}
+.brand-text .b-sub{font-size:.7rem;color:var(--gold);font-family:var(--font-mono);letter-spacing:1.5px;text-transform:uppercase;}
+
+.nav-links{display:flex;gap:2px;align-items:center;}
+.nav-links a{
+  padding:10px 14px;font-size:.9rem;font-weight:500;color:var(--text);
+  border-radius:8px;position:relative;transition:color .25s;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:14px;right:14px;bottom:6px;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.nav-links a:hover{color:var(--royal-l);}
+[data-theme="dark"] .nav-links a:hover{color:var(--gold-l);}
+.nav-links a:hover::after{transform:scaleX(1);}
+
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.icon-btn{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg-alt);color:var(--text);
+  transition:transform .25s, background .25s;
+  position:relative;
+}
+.icon-btn:hover{transform:translateY(-2px);background:var(--gray-mid);}
+.bell-dot{
+  position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;
+  background:var(--gold);border:2px solid var(--bg);
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:10px;font-weight:600;font-size:.88rem;
+  transition:transform .25s, box-shadow .25s; position:relative; overflow:hidden;
+}
+.btn-primary{background:var(--gold);color:var(--royal-deep);box-shadow:0 8px 20px rgba(201,162,39,.35);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(201,162,39,.45);}
+.btn-outline{border:1.5px solid var(--gray-mid);color:var(--text);}
+.btn-outline:hover{border-color:var(--gold);transform:translateY(-3px);}
+.btn-ghost-light{border:1.5px solid rgba(255,255,255,.4);color:#fff;}
+.btn-ghost-light:hover{border-color:var(--gold-l);background:rgba(255,255,255,.08);}
+
+/* ripple */
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rip .6s ease-out;pointer-events:none;}
+@keyframes rip{to{transform:scale(3);opacity:0;}}
+
+.hamburger{display:none;flex-direction:column;gap:5px;width:40px;height:40px;align-items:center;justify-content:center;}
+.hamburger span{width:22px;height:2px;background:var(--text);transition:all .3s;}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.active span:nth-child(2){opacity:0;}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* mobile search */
+.search-panel{
+  max-height:0;overflow:hidden;transition:max-height .35s ease;
+  background:var(--bg-alt);border-bottom:1px solid var(--border);
+}
+.search-panel.open{max-height:80px;}
+.search-panel .container{padding:14px 24px;}
+.search-panel input{
+  width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--border);
+  background:var(--card-bg);color:var(--text);font-family:inherit;font-size:.9rem;
+}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;overflow:hidden;
+  background:radial-gradient(circle at 20% 20%, #1D4587 0%, var(--royal-deep) 55%, #081428 100%);
+  color:#fff;padding:120px 24px 100px;
+  min-height:92vh;display:flex;align-items:center;
+}
+.hero-bg-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.hero-shape{position:absolute;border-radius:50%;opacity:.15;filter:blur(2px);}
+.shape1{width:420px;height:420px;background:var(--gold);top:-120px;right:-100px;animation:float 9s ease-in-out infinite;}
+.shape2{width:280px;height:280px;border:2px solid var(--gold-l);background:transparent;opacity:.25;bottom:-60px;left:-60px;animation:float 7s ease-in-out infinite reverse;}
+.shape3{width:160px;height:160px;background:#3a5ba0;top:40%;right:12%;opacity:.2;animation:float 11s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0) translateX(0);}50%{transform:translateY(-30px) translateX(15px);}}
+
+.hero-icons i{
+  position:absolute;color:rgba(231,197,103,.28);animation:float 8s ease-in-out infinite;
+}
+.hi1{top:18%;left:8%;font-size:2.4rem;animation-delay:.2s;}
+.hi2{top:65%;left:14%;font-size:1.8rem;animation-delay:1.2s;}
+.hi3{top:25%;right:20%;font-size:2rem;animation-delay:.6s;}
+.hi4{bottom:14%;right:10%;font-size:2.6rem;animation-delay:1.8s;}
+.hi5{top:50%;left:46%;font-size:1.4rem;animation-delay:2.4s;opacity:.5;}
+
+.hero-inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;width:100%;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:8px 16px;border-radius:30px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(201,162,39,.4);
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold-l);margin-bottom:26px;
+}
+.hero h1{
+  font-size:clamp(2.3rem, 5.4vw, 4.4rem);
+  font-weight:800;line-height:1.08;max-width:900px;letter-spacing:-1px;
+}
+.hero h1 .accent{color:var(--gold-l);font-style:italic;font-weight:600;}
+.hero .type-cursor{border-right:3px solid var(--gold-l);animation:blink 1s step-end infinite;}
+@keyframes blink{50%{border-color:transparent;}}
+.hero p.sub{
+  margin-top:24px;font-size:1.15rem;color:#c9d5ec;max-width:640px;font-weight:300;
+}
+.hero-cta{display:flex;gap:18px;margin-top:42px;flex-wrap:wrap;}
+.hero-ledger{
+  margin-top:64px;display:flex;gap:0;flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,.15);padding-top:28px;max-width:760px;
+}
+.hero-ledger .hl-item{flex:1;min-width:130px;padding-right:24px;}
+.hero-ledger .hl-num{font-family:var(--font-mono);font-size:1.7rem;color:var(--gold-l);font-weight:700;}
+.hero-ledger .hl-label{font-size:.76rem;color:#9fb0cc;text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+
+/* ============ SECTION GENERIC ============ */
+section{padding:100px 0;}
+.section-alt{background:var(--bg-alt);}
+.eyebrow{
+  font-family:var(--font-mono);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:'';width:26px;height:2px;background:var(--gold);display:inline-block;}
+.section-head{max-width:680px;margin-bottom:56px;}
+.section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-.5px;}
+.section-head p{margin-top:14px;color:var(--text-muted);font-size:1.02rem;}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.section-head.center .eyebrow{justify-content:center;}
+.section-head.center .eyebrow::before{display:none;}
+
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ============ STATS ============ */
+.stats{
+  background:var(--royal-deep);color:#fff;padding:70px 0;
+  position:relative;
+}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;}
+.stat-card{text-align:center;padding:20px;border-right:1px solid rgba(255,255,255,.1);}
+.stat-card:last-child{border-right:none;}
+.stat-num{
+  font-family:var(--font-mono);font-size:clamp(2rem,3.6vw,2.8rem);font-weight:700;color:var(--gold-l);
+}
+.stat-label{color:#a9b8d6;margin-top:8px;font-size:.9rem;letter-spacing:.5px;text-transform:uppercase;}
+
+/* ============ ABOUT CARDS ============ */
+.about-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.info-card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:34px 26px;box-shadow:var(--shadow-sm);transition:transform .3s, box-shadow .3s, border-color .3s;
+}
+.info-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:var(--gold);}
+.info-icon{
+  width:56px;height:56px;border-radius:14px;
+  background:linear-gradient(145deg,var(--royal),var(--royal-l));
+  color:var(--gold-l);display:flex;align-items:center;justify-content:center;font-size:1.35rem;
+  margin-bottom:20px;
+}
+.info-card h3{font-size:1.15rem;margin-bottom:10px;font-weight:600;}
+.info-card p{color:var(--text-muted);font-size:.92rem;}
+
+/* ============ ACADEMIC LEVEL CARDS ============ */
+.level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.level-card{
+  background:var(--card-bg);border-radius:var(--radius);border:1px solid var(--border);
+  overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s, box-shadow .3s;
+  display:flex;flex-direction:column;
+}
+.level-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.level-head{
+  padding:26px 24px;background:linear-gradient(135deg,var(--royal),var(--royal-l));color:#fff;position:relative;
+}
+.level-head .lvl-tag{font-family:var(--font-mono);font-size:.7rem;color:var(--gold-l);letter-spacing:2px;text-transform:uppercase;}
+.level-head h3{font-size:1.3rem;margin-top:6px;font-weight:700;}
+.level-body{padding:22px 24px;flex:1;display:flex;flex-direction:column;}
+.level-body ul{margin-bottom:20px;flex:1;}
+.level-body li{
+  display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);
+  font-size:.88rem;color:var(--text-muted);
+}
+.level-body li i{color:var(--gold);font-size:.75rem;}
+.level-body .btn-outline{width:100%;justify-content:center;}
+
+/* ============ LECTURERS ============ */
+.lecturer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;}
+.lect-card{
+  background:var(--card-bg);border-radius:var(--radius);border:1px solid var(--border);
+  overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s, box-shadow .3s;text-align:center;
+}
+.lect-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);}
+.lect-photo{
+  height:180px;background:linear-gradient(135deg,var(--royal-l),var(--royal));
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.lect-photo i{font-size:4rem;color:rgba(255,255,255,.35);}
+.lect-photo::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(to top, rgba(11,24,48,.5), transparent);
+}
+.lect-body{padding:22px 18px;}
+.lect-body h4{font-weight:600;font-size:1.05rem;}
+.lect-pos{color:var(--gold);font-size:.8rem;font-weight:600;margin:6px 0 12px;text-transform:uppercase;letter-spacing:.5px;}
+.lect-body .lect-qual, .lect-body .lect-spec{font-size:.82rem;color:var(--text-muted);margin-bottom:4px;}
+.lect-body .lect-spec strong{color:var(--text);}
+.mail-btn{
+  margin-top:16px;display:inline-flex;align-items:center;gap:8px;
+  padding:9px 18px;border-radius:8px;background:var(--bg-alt);font-size:.8rem;font-weight:600;
+  transition:background .25s;
+}
+.mail-btn:hover{background:var(--gold);color:var(--royal-deep);}
+
+/* ============ FEATURE / RESOURCE CARDS ============ */
+.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.feature-card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 22px;transition:transform .3s, box-shadow .3s, border-color .3s;cursor:pointer;
+}
+.feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:var(--gold);}
+.feature-card i{font-size:1.6rem;color:var(--royal-l);margin-bottom:16px;transition:color .3s, transform .3s;}
+[data-theme="dark"] .feature-card i{color:var(--gold-l);}
+.feature-card:hover i{color:var(--gold);transform:scale(1.1) rotate(-4deg);}
+.feature-card h4{font-size:1rem;font-weight:600;margin-bottom:6px;}
+.feature-card p{font-size:.83rem;color:var(--text-muted);}
+
+/* ============ NEWS ============ */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.news-card{
+  background:var(--card-bg);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);
+  box-shadow:var(--shadow-sm);transition:transform .3s, box-shadow .3s;
+}
+.news-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);}
+.news-img{
+  height:180px;background:linear-gradient(135deg,var(--royal),var(--royal-l));
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+}
+.news-img i{font-size:2.8rem;color:rgba(255,255,255,.3);}
+.news-date{
+  position:absolute;top:14px;left:14px;background:var(--gold);color:var(--royal-deep);
+  padding:6px 12px;border-radius:8px;font-family:var(--font-mono);font-size:.72rem;font-weight:700;
+}
+.news-body{padding:22px;}
+.news-tag{color:var(--gold);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+.news-body h3{font-size:1.08rem;margin:10px 0;font-weight:600;line-height:1.4;}
+.news-body p{font-size:.88rem;color:var(--text-muted);margin-bottom:14px;}
+.news-link{font-size:.85rem;font-weight:600;color:var(--royal-l);display:inline-flex;align-items:center;gap:6px;}
+[data-theme="dark"] .news-link{color:var(--gold-l);}
+.news-link i{transition:transform .25s;}
+.news-card:hover .news-link i{transform:translateX(4px);}
+
+/* ============ EVENTS ============ */
+.events-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--border);}
+.event-row{
+  display:grid;grid-template-columns:110px 1fr auto;gap:24px;align-items:center;
+  padding:24px 20px;border-bottom:1px solid var(--border);transition:background .25s;
+}
+.event-row:hover{background:var(--bg-alt);}
+.event-date{
+  text-align:center;background:var(--royal-deep);color:#fff;border-radius:10px;padding:12px 8px;
+}
+.event-date .ed-day{font-family:var(--font-mono);font-size:1.5rem;font-weight:700;color:var(--gold-l);}
+.event-date .ed-mon{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:#c9d5ec;}
+.event-info h4{font-size:1.02rem;font-weight:600;margin-bottom:6px;}
+.event-info p{font-size:.85rem;color:var(--text-muted);}
+.event-info p i{color:var(--gold);margin-right:6px;}
+.event-tag{
+  padding:7px 14px;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase;
+  background:rgba(201,162,39,.15);color:var(--gold);white-space:nowrap;
+}
+
+/* ============ GALLERY ============ */
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:16px;
+}
+.gallery-grid .g-item:nth-child(3n+1){grid-row:span 2;}
+.g-item{
+  position:relative;border-radius:12px;overflow:hidden;
+  background:linear-gradient(135deg,var(--royal),var(--royal-l));cursor:pointer;
+}
+.g-item i{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:rgba(255,255,255,.35);transition:transform .4s;
+}
+.g-item:hover i{transform:scale(1.15);}
+.g-overlay{
+  position:absolute;inset:0;background:linear-gradient(to top, rgba(11,24,48,.85), transparent 60%);
+  display:flex;align-items:flex-end;padding:16px;opacity:0;transition:opacity .3s;
+}
+.g-item:hover .g-overlay{opacity:1;}
+.g-overlay span{color:#fff;font-size:.85rem;font-weight:600;}
+
+/* ============ TESTIMONIALS ============ */
+.testi-wrap{max-width:760px;margin:0 auto;position:relative;}
+.testi-track{overflow:hidden;}
+.testi-slides{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.testi-slide{min-width:100%;padding:0 10px;}
+.testi-card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:44px 40px;text-align:center;box-shadow:var(--shadow-sm);
+}
+.testi-card i.fa-quote-left{color:var(--gold);font-size:1.8rem;margin-bottom:18px;}
+.testi-card p{font-size:1.08rem;font-style:italic;color:var(--text);margin-bottom:24px;}
+.testi-person{display:flex;align-items:center;justify-content:center;gap:14px;}
+.testi-avatar{
+  width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--royal),var(--royal-l));
+  display:flex;align-items:center;justify-content:center;color:var(--gold-l);font-weight:700;
+}
+.testi-name{font-weight:600;font-size:.92rem;}
+.testi-role{font-size:.78rem;color:var(--text-muted);}
+.testi-dots{display:flex;justify-content:center;gap:9px;margin-top:28px;}
+.testi-dots span{width:9px;height:9px;border-radius:50%;background:var(--border);transition:background .3s, transform .3s;cursor:pointer;}
+.testi-dots span.active{background:var(--gold);transform:scale(1.3);}
+.testi-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  background:var(--card-bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-sm);transition:background .25s;
+}
+.testi-arrow:hover{background:var(--gold);color:var(--royal-deep);}
+.testi-prev{left:-60px;}
+.testi-next{right:-60px;}
+
+/* ============ FAQ ============ */
+.faq-list{max-width:780px;margin:0 auto;}
+.faq-item{
+  border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;
+  background:var(--card-bg);
+}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;padding:20px 24px;cursor:pointer;
+  font-weight:600;font-size:.98rem;
+}
+.faq-q i{color:var(--gold);transition:transform .3s;}
+.faq-item.open .faq-q i{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.faq-a p{padding:0 24px 22px;color:var(--text-muted);font-size:.9rem;}
+.faq-item.open .faq-a{max-height:220px;}
+
+/* ============ CONTACT ============ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;}
+.contact-info-card{
+  background:var(--royal-deep);color:#fff;border-radius:var(--radius);padding:40px;height:100%;
+}
+.contact-info-card h3{font-size:1.3rem;margin-bottom:24px;color:var(--gold-l);}
+.c-item{display:flex;gap:16px;margin-bottom:22px;align-items:flex-start;}
+.c-item i{
+  width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;color:var(--gold-l);flex-shrink:0;
+}
+.c-item .c-label{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:#a9b8d6;}
+.c-item .c-val{font-size:.94rem;margin-top:4px;}
+.map-box{
+  margin-top:26px;border-radius:12px;overflow:hidden;height:160px;
+  background:linear-gradient(135deg,#1D4587,#0B1E40);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
+  border:1px dashed rgba(255,255,255,.25);color:#9fb0cc;font-size:.8rem;
+}
+.map-box i{font-size:1.8rem;color:var(--gold-l);}
+
+.contact-form{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:40px;box-shadow:var(--shadow-sm);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.form-group{margin-bottom:18px;}
+.form-group label{font-size:.82rem;font-weight:600;margin-bottom:8px;display:block;}
+.form-group input, .form-group select, .form-group textarea{
+  width:100%;padding:13px 16px;border-radius:9px;border:1px solid var(--border);
+  background:var(--bg-alt);color:var(--text);font-family:inherit;font-size:.9rem;
+  transition:border-color .25s, box-shadow .25s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus{
+  outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.18);
+}
+.form-group textarea{resize:vertical;min-height:110px;}
+.form-note{margin-top:14px;font-size:.8rem;color:var(--text-muted);display:none;}
+.form-note.show{display:block;color:#2c8a4b;}
+
+/* ============ FOOTER ============ */
+footer{background:var(--royal-deep);color:#c9d5ec;padding:80px 0 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,.1);}
+.footer-brand .brand-mark{margin-bottom:16px;}
+.footer-brand p{font-size:.88rem;color:#9fb0cc;margin:14px 0 20px;max-width:320px;}
+.social-row{display:flex;gap:10px;}
+.social-row a{
+  width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;transition:background .25s, transform .25s;
+}
+.social-row a:hover{background:var(--gold);color:var(--royal-deep);transform:translateY(-3px);}
+.footer-col h4{color:#fff;font-size:.92rem;margin-bottom:20px;letter-spacing:.5px;}
+.footer-col ul li{margin-bottom:12px;}
+.footer-col ul li a{font-size:.86rem;color:#9fb0cc;transition:color .25s;}
+.footer-col ul li a:hover{color:var(--gold-l);}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;padding:26px 0;flex-wrap:wrap;gap:10px;
+  font-size:.8rem;color:#8195b8;
+}
+.footer-bottom .legal-links{display:flex;gap:20px;}
+.footer-bottom .legal-links a:hover{color:var(--gold-l);}
+.dev-credit{color:#8195b8;}
+.dev-credit strong{color:var(--gold-l);}
+
+/* ============ FLOATING BUTTONS ============ */
+.fab-stack{position:fixed;bottom:30px;right:30px;z-index:900;display:flex;flex-direction:column;gap:14px;align-items:flex-end;}
+.fab{
+  width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--royal-deep);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(201,162,39,.4);
+  font-size:1.15rem;transition:transform .3s, opacity .3s, box-shadow .3s;
+}
+.fab:hover{transform:translateY(-4px) scale(1.05);}
+#scrollTop{
+  opacity:0;pointer-events:none;transform:translateY(10px);
+  background:var(--royal-deep);color:var(--gold-l);box-shadow:var(--shadow-md);
+}
+#scrollTop.show{opacity:1;pointer-events:auto;transform:translateY(0);}
+.fab-main{position:relative;}
+.fab-menu{
+  display:flex;flex-direction:column;gap:10px;align-items:flex-end;
+  max-height:0;overflow:hidden;opacity:0;transition:max-height .35s, opacity .35s;
+}
+.fab-menu.open{max-height:220px;opacity:1;margin-bottom:4px;}
+.fab-menu a{
+  width:44px;height:44px;border-radius:50%;background:var(--card-bg);color:var(--text);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);font-size:1rem;
+  border:1px solid var(--border);
+}
+.fab-menu a:hover{background:var(--gold);color:var(--royal-deep);}
+
+/* Notification dropdown */
+.notif-panel{
+  position:absolute;top:56px;right:24px;width:300px;background:var(--card-bg);
+  border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);
+  padding:10px;opacity:0;visibility:hidden;transform:translateY(-10px);
+  transition:all .25s;z-index:1200;
+}
+.notif-panel.open{opacity:1;visibility:visible;transform:translateY(0);}
+.notif-panel h5{padding:10px 12px;font-size:.85rem;color:var(--text-muted);}
+.notif-item{display:flex;gap:12px;padding:10px 12px;border-radius:10px;transition:background .2s;}
+.notif-item:hover{background:var(--bg-alt);}
+.notif-item i{color:var(--gold);margin-top:2px;}
+.notif-item .n-title{font-size:.84rem;font-weight:600;}
+.notif-item .n-time{font-size:.72rem;color:var(--text-muted);}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1080px){
+  .about-grid, .level-grid, .lecturer-grid, .feature-grid{grid-template-columns:repeat(2,1fr);}
+  .news-grid{grid-template-columns:repeat(2,1fr);}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-card:nth-child(2){border-right:none;}
+  .contact-grid{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:860px){
+  .nav-links{
+    position:fixed;top:0;right:0;height:100vh;width:280px;
+    background:var(--card-bg);flex-direction:column;align-items:flex-start;
+    padding:100px 26px 26px;box-shadow:var(--shadow-lg);
+    transform:translateX(100%);transition:transform .35s ease;gap:2px;
+  }
+  .nav-links.open{transform:translateX(0);}
+  .nav-links a{width:100%;padding:14px 10px;border-bottom:1px solid var(--border);}
+  .hamburger{display:flex;}
+  .topbar .tb-left span:nth-child(2){display:none;}
+}
+@media(max-width:720px){
+  .about-grid, .level-grid, .lecturer-grid, .feature-grid, .news-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .event-row{grid-template-columns:70px 1fr;}
+  .event-tag{grid-column:2;justify-self:start;}
+  .testi-arrow{display:none;}
+  .hero{padding:110px 0 80px;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr;}
+  .hero-ledger .hl-item{min-width:44%;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+}
+
+/* ============ HARD ANTI-OVERFLOW SAFEGUARDS ============ */
+html, body{max-width:100%;overflow-x:hidden;}
+.container{width:100%;}
+section, header, footer, .hero, .stats, .topbar{max-width:100vw;overflow-x:hidden;}
+img, svg, video, iframe{max-width:100%;height:auto;}
+table{max-width:100%;}
+.testi-arrow{display:none;}
+@media(min-width:1160px){.testi-arrow{display:flex;}}
+
+/* ============ EXTRA SMALL SCREEN TUNING (≤540px) ============ */
+@media(max-width:540px){
+  .container{padding:0 16px;}
+  .topbar .container{padding:8px 16px;}
+  .topbar .tb-left span{margin-right:0;display:block;font-size:.72rem;white-space:normal;}
+  .topbar .tb-left span:nth-child(2){display:none;}
+  nav.navbar{padding:12px 16px;}
+  .brand{gap:8px;}
+  .brand-mark{width:38px;height:38px;font-size:1rem;border-radius:10px;}
+  .brand-text .b-title{font-size:.85rem;}
+  .brand-text .b-sub{font-size:.6rem;}
+  .nav-actions{gap:6px;}
+  .icon-btn{width:36px;height:36px;font-size:.9rem;}
+  .nav-actions .btn{display:none;}
+  .hamburger{width:36px;height:36px;}
+  .hero{padding:96px 0 64px;}
+  .hero-eyebrow{font-size:.64rem;padding:6px 12px;flex-wrap:wrap;}
+  .hero h1{font-size:clamp(1.7rem,7vw,2.2rem);}
+  .hero p.sub{font-size:.98rem;}
+  .hero-cta{flex-direction:column;align-items:stretch;}
+  .hero-cta .btn{justify-content:center;width:100%;}
+  .hero-ledger{gap:18px 0;}
+  .hero-ledger .hl-item{min-width:44%;padding-right:0;}
+  section{padding:64px 0;}
+  .section-head h2{font-size:1.5rem;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
+  .stat-card{border-right:none !important;padding:10px;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:130px;gap:10px;}
+  .contact-info-card, .contact-form{padding:26px 20px;}
+  .testi-card{padding:30px 22px;}
+  .footer-grid{grid-template-columns:1fr;gap:34px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:12px;}
+  .fab-stack{right:18px;bottom:18px;}
+  .fab{width:46px;height:46px;font-size:1rem;}
+  .notif-panel{right:12px;left:12px;width:auto;}
+}
+
+/* Prevent the mobile nav drawer from ever forcing page width beyond viewport */
+.nav-links{max-width:86vw;}
+
+/* ===================================================================
+   HIDDEN ADMIN DASHBOARD (demo only — no backend, browser session only)
+   =================================================================== */
+.admin-overlay{
+  position:fixed;inset:0;z-index:5000;background:rgba(11,24,48,.55);
+  display:none;align-items:stretch;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.admin-overlay.open{display:flex;}
+.admin-panel{
+  background:var(--bg);width:100%;max-width:1240px;margin:26px auto;border-radius:18px;
+  box-shadow:var(--shadow-lg);overflow:hidden;display:grid;grid-template-columns:250px 1fr;
+  max-height:calc(100vh - 52px);
+}
+.admin-sidebar{
+  background:var(--royal-deep);color:#cfd9ef;padding:26px 18px;display:flex;flex-direction:column;
+}
+.admin-brand{display:flex;gap:12px;align-items:center;margin-bottom:26px;}
+.admin-brand-title{color:#fff;font-weight:700;font-size:.95rem;}
+.admin-brand-sub{font-family:var(--font-mono);font-size:.65rem;color:var(--gold-l);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.admin-tabs{display:flex;flex-direction:column;gap:4px;flex:1;overflow-y:auto;}
+.admin-tab{
+  display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;font-size:.86rem;
+  color:#cfd9ef;transition:background .2s, color .2s;cursor:pointer;text-align:left;width:100%;
+}
+.admin-tab i{width:18px;text-align:center;color:var(--gold-l);}
+.admin-tab:hover{background:rgba(255,255,255,.08);}
+.admin-tab.active{background:var(--gold);color:var(--royal-deep);}
+.admin-tab.active i{color:var(--royal-deep);}
+.admin-sidebar-foot{
+  font-size:.72rem;color:#8195b8;border-top:1px solid rgba(255,255,255,.1);padding-top:16px;margin-top:16px;
+  display:flex;gap:8px;align-items:flex-start;
+}
+.admin-sidebar-foot i{color:var(--gold);margin-top:2px;}
+
+.admin-main{padding:30px 32px;overflow-y:auto;background:var(--bg);}
+.admin-main-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.admin-main-head h2{font-size:1.4rem;font-weight:700;}
+.admin-section-desc{color:var(--text-muted);font-size:.86rem;margin-top:6px;max-width:480px;}
+.admin-main-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
+.admin-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;}
+table.admin-table{width:100%;border-collapse:collapse;min-width:520px;}
+table.admin-table th{
+  text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);
+  padding:14px 16px;background:var(--bg-alt);border-bottom:1px solid var(--border);white-space:nowrap;
+}
+table.admin-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:.86rem;vertical-align:top;}
+table.admin-table tr:last-child td{border-bottom:none;}
+table.admin-table td.admin-actions-cell{white-space:nowrap;text-align:right;}
+.admin-icon-action{
+  width:34px;height:34px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;
+  background:var(--bg-alt);color:var(--text);margin-left:6px;transition:background .2s,color .2s;
+}
+.admin-icon-action:hover{background:var(--gold);color:var(--royal-deep);}
+.admin-icon-action.danger:hover{background:#d9534f;color:#fff;}
+.admin-empty-row td{text-align:center;color:var(--text-muted);padding:36px 16px;}
+.admin-cell-title{font-weight:600;}
+.admin-cell-sub{color:var(--text-muted);font-size:.78rem;margin-top:2px;}
+
+.admin-modal-backdrop{
+  position:fixed;inset:0;background:rgba(11,24,48,.6);display:none;align-items:center;justify-content:center;
+  z-index:5100;padding:20px;
+}
+.admin-modal-backdrop.open{display:flex;}
+.admin-modal{
+  background:var(--card-bg);border-radius:16px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);
+  max-height:88vh;display:flex;flex-direction:column;overflow:hidden;
+}
+.admin-modal-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--border);}
+.admin-modal-head h3{font-size:1.05rem;font-weight:700;}
+.admin-modal-form{padding:22px 24px;overflow-y:auto;flex:1;}
+.admin-modal-form .form-group label{font-size:.8rem;}
+.admin-modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--border);}
+
+@media(max-width:860px){
+  .admin-panel{grid-template-columns:1fr;grid-template-rows:auto 1fr;margin:0;max-height:100vh;border-radius:0;}
+  .admin-sidebar{flex-direction:row;align-items:center;overflow-x:auto;padding:14px 16px;gap:14px;}
+  .admin-brand{margin-bottom:0;flex-shrink:0;}
+  .admin-tabs{flex-direction:row;overflow-x:auto;}
+  .admin-tab{white-space:nowrap;}
+  .admin-sidebar-foot{display:none;}
+  .admin-main{padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div id="loader">
+  <div class="loader-mark"></div>
+  <div class="loader-text">Loading Department Portal…</div>
+</div>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="container">
+    <div class="tb-left">
+      <span><i class="fa-solid fa-location-dot"></i>UNICAL, Calabar, Cross River State</span>
+      <span><i class="fa-solid fa-envelope"></i>banking.finance@unical.edu.ng</span>
+    </div>
+    <div class="tb-right">
+      <a href="#" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="site-header" id="siteHeader">
+  <nav class="navbar">
+    <a href="#home" class="brand">
+      <div class="brand-mark"><i class="fa-solid fa-landmark"></i></div>
+      <div class="brand-text">
+        <div class="b-title">Banking &amp; Finance</div>
+        <div class="b-sub">University of Calabar</div>
+      </div>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#academics">Academics</a></li>
+      <li><a href="#students">Students</a></li>
+      <li><a href="#lecturers">Lecturers</a></li>
+      <li><a href="#resources">Resources</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="icon-btn" id="searchToggle" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <button class="icon-btn" id="notifToggle" title="Notifications">
+        <i class="fa-regular fa-bell"></i><span class="bell-dot"></span>
+      </button>
+      <button class="icon-btn" id="themeToggle" title="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+      <a href="#students" class="btn btn-primary"><i class="fa-solid fa-compass"></i> Student Portal</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+
+    <div class="notif-panel" id="notifPanel">
+      <h5>Notifications</h5>
+      <div class="notif-item"><i class="fa-solid fa-bullhorn"></i><div><div class="n-title">Second semester registration opens Aug 3</div><div class="n-time">2 hours ago</div></div></div>
+      <div class="notif-item"><i class="fa-solid fa-calendar-check"></i><div><div class="n-title">FIN 215 result checking now live</div><div class="n-time">1 day ago</div></div></div>
+      <div class="notif-item"><i class="fa-solid fa-award"></i><div><div class="n-title">CIBN Essay Competition shortlist released</div><div class="n-time">3 days ago</div></div></div>
+    </div>
+  </nav>
+  <div class="search-panel" id="searchPanel">
+    <div class="container">
+      <input type="text" placeholder="Search courses, lecturers, resources, news…">
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-bg-layer">
+    <div class="hero-shape shape1"></div>
+    <div class="hero-shape shape2"></div>
+    <div class="hero-shape shape3"></div>
+    <div class="hero-icons">
+      <i class="fa-solid fa-coins hi1"></i>
+      <i class="fa-solid fa-chart-line hi2"></i>
+      <i class="fa-solid fa-building-columns hi3"></i>
+      <i class="fa-solid fa-sack-dollar hi4"></i>
+      <i class="fa-solid fa-percent hi5"></i>
+    </div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><i class="fa-solid fa-graduation-cap"></i> Faculty of Management Sciences · Est. 1975</div>
+    <h1>Department of<br><span class="accent" id="typeTarget"></span></h1>
+    <p class="sub">Empowering future financial leaders through excellence, innovation and integrity — training Nigeria's next generation of bankers, analysts, and policy makers.</p>
+    <div class="hero-cta">
+      <a href="#students" class="btn btn-primary ripple-btn"><i class="fa-solid fa-compass"></i> Explore Portal</a>
+      <a href="#academics" class="btn btn-ghost-light ripple-btn"><i class="fa-solid fa-graduation-cap"></i> View Programme</a>
+    </div>
+    <div class="hero-ledger">
+      <div class="hl-item"><div class="hl-num">1975</div><div class="hl-label">Est. as a Discipline</div></div>
+      <div class="hl-item"><div class="hl-num">NUC</div><div class="hl-label">Fully Accredited</div></div>
+      <div class="hl-item"><div class="hl-num">B.Sc</div><div class="hl-label">Banking &amp; Finance</div></div>
+      <div class="hl-item"><div class="hl-num">4-Yr</div><div class="hl-label">Programme Duration</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid" id="statsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">About the Department</div>
+      <h2>Four decades of shaping financial thought in Nigeria</h2>
+      <p>From a unit within the Faculty of Management Sciences to one of UNICAL's most sought-after departments, our story is one of steady growth, rigorous scholarship, and service to the nation's financial sector.</p>
+    </div>
+    <div class="about-grid" id="aboutGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ACADEMICS ============ -->
+<section id="academics" class="section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Academic Programme</div>
+      <h2>A four-year path from fundamentals to specialisation</h2>
+      <p>Our B.Sc Banking and Finance curriculum is structured across four levels, each building the analytical and practical competence required for a career in modern finance.</p>
+    </div>
+    <div class="level-grid" id="levelGrid"></div>
+  </div>
+</section>
+
+<!-- ============ LECTURERS ============ -->
+<section id="lecturers">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Faculty</div>
+      <h2>Meet our lecturers</h2>
+      <p>Our teaching staff combine academic rigour with real-world banking and finance experience.</p>
+    </div>
+    <div class="lecturer-grid" id="lecturerGrid"></div>
+  </div>
+</section>
+
+<!-- ============ STUDENT PORTAL FEATURES ============ -->
+<section id="students" class="section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Student Portal</div>
+      <h2>Everything you need in one place</h2>
+      <p>Tools and resources built around the everyday needs of a Banking and Finance student.</p>
+    </div>
+    <div class="feature-grid" id="featuresGrid"></div>
+  </div>
+</section>
+
+<!-- ============ RESOURCES ============ -->
+<section id="resources">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Department Resources</div>
+      <h2>Downloads &amp; reference material</h2>
+      <p>Curated documents to support your studies from year one through final-year research.</p>
+    </div>
+    <div class="feature-grid" id="resourcesGrid"></div>
+  </div>
+</section>
+
+<!-- ============ NEWS ============ -->
+<section id="news" class="section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Latest News</div>
+      <h2>What's happening in the department</h2>
+    </div>
+    <div class="news-grid" id="newsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ EVENTS ============ -->
+<section id="events">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Upcoming Events</div>
+      <h2>Mark your calendar</h2>
+    </div>
+    <div class="events-list" id="eventsList"></div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Gallery</div>
+      <h2>Moments from the department</h2>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Testimonials</div>
+      <h2>What our students say</h2>
+    </div>
+    <div class="testi-wrap reveal">
+      <button class="testi-arrow testi-prev" id="testiPrev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="testi-arrow testi-next" id="testiNext"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="testi-track">
+        <div class="testi-slides" id="testiSlides"></div>
+      </div>
+      <div class="testi-dots" id="testiDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section-alt" id="faq">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">FAQ</div>
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Contact Us</div>
+      <h2>Get in touch with the department</h2>
+      <p>Have a question about admissions, courses, or academic support? Send us a message.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info-card reveal">
+        <h3>Department Office</h3>
+        <div class="c-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div><div class="c-label">Address</div><div class="c-val">Faculty of Management Sciences, University of Calabar, Calabar, Cross River State, Nigeria</div></div>
+        </div>
+        <div class="c-item">
+          <i class="fa-solid fa-phone"></i>
+          <div><div class="c-label">Phone</div><div class="c-val">+234 803 000 0000</div></div>
+        </div>
+        <div class="c-item">
+          <i class="fa-solid fa-envelope"></i>
+          <div><div class="c-label">Email</div><div class="c-val">banking.finance@unical.edu.ng</div></div>
+        </div>
+        <div class="c-item">
+          <i class="fa-regular fa-clock"></i>
+          <div><div class="c-label">Office Hours</div><div class="c-val">Mon – Fri, 8:00 AM – 4:00 PM</div></div>
+        </div>
+        <div class="map-box">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>Google Maps embed placeholder — UNICAL, Calabar</span>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm">
+        <div class="form-row">
+          <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your full name" required></div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Level / Status</label>
+            <select>
+              <option>Prospective Student</option>
+              <option>100 Level</option>
+              <option>200 Level</option>
+              <option>300 Level</option>
+              <option>400 Level</option>
+              <option>Alumni</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Subject</label><input type="text" placeholder="What is this about?" required></div>
+        </div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Write your message here…" required></textarea></div>
+        <button type="submit" class="btn btn-primary ripple-btn" style="width:100%;justify-content:center;">
+          <i class="fa-solid fa-paper-plane"></i> Send Message
+        </button>
+        <div class="form-note" id="formNote"><i class="fa-solid fa-circle-check"></i> Your message has been received. We'll respond within 2 business days.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand-mark"><i class="fa-solid fa-landmark"></i></div>
+        <h3 style="color:#fff;">Banking &amp; Finance</h3>
+        <p>Department of Banking and Finance, Faculty of Management Sciences, University of Calabar — training Nigeria's next generation of financial leaders.</p>
+        <div class="social-row">
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#academics">Academics</a></li>
+          <li><a href="#lecturers">Lecturers</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a href="#">University of Calabar</a></li>
+          <li><a href="#">Faculty of Mgt. Sciences</a></li>
+          <li><a href="#">JAMB / UTME Portal</a></li>
+          <li><a href="#">NUC Accreditation</a></li>
+          <li><a href="#">CIBN</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Student Portal</h4>
+        <ul>
+          <li><a href="#students">GPA Calculator</a></li>
+          <li><a href="#students">Course Materials</a></li>
+          <li><a href="#resources">Download Centre</a></li>
+          <li><a href="#students">Academic Calendar</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; <span id="year"></span> Department of Banking &amp; Finance, University of Calabar. All rights reserved.</div>
+      <div class="legal-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#" id="adminTrigger" title="Staff access" aria-label="Staff access" style="opacity:.35;"><i class="fa-solid fa-gear"></i></a>
+      </div>
+      <div class="dev-credit">Designed &amp; built by <strong>BRYTE</strong></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ FLOATING ACTION BUTTONS ============ -->
+<div class="fab-stack">
+  <div class="fab-menu" id="fabMenu">
+    <a href="#contact" title="Contact"><i class="fa-solid fa-envelope"></i></a>
+    <a href="#students" title="GPA Calculator"><i class="fa-solid fa-calculator"></i></a>
+    <a href="#faq" title="FAQ"><i class="fa-solid fa-circle-question"></i></a>
+  </div>
+  <button class="fab fab-main" id="fabMain"><i class="fa-solid fa-plus"></i></button>
+  <button class="fab" id="scrollTop" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+
+<!-- ============ HIDDEN ADMIN DASHBOARD (demo only — no backend) ============ -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="brand-mark"><i class="fa-solid fa-user-shield"></i></div>
+        <div>
+          <div class="admin-brand-title">Admin Dashboard</div>
+          <div class="admin-brand-sub">Demo mode · no backend</div>
+        </div>
+      </div>
+      <nav class="admin-tabs" id="adminTabs"></nav>
+      <div class="admin-sidebar-foot" id="adminSyncStatus">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        Checking shared database connection…
+      </div>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-main-head">
+        <div>
+          <h2 id="adminSectionTitle">Section</h2>
+          <p id="adminSectionDesc" class="admin-section-desc"></p>
+        </div>
+        <div class="admin-main-actions">
+          <button class="btn btn-outline" id="adminResetBtn"><i class="fa-solid fa-rotate-left"></i> Reset section</button>
+          <button class="btn btn-primary" id="adminAddBtn"><i class="fa-solid fa-plus"></i> Add new</button>
+          <button class="icon-btn" id="adminCloseBtn" title="Close admin dashboard"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+      <div class="admin-table-wrap" id="adminTableWrap"></div>
+    </main>
+  </div>
+
+  <!-- Add / Edit modal -->
+  <div class="admin-modal-backdrop" id="adminModalBackdrop">
+    <div class="admin-modal">
+      <div class="admin-modal-head">
+        <h3 id="adminModalTitle">Add item</h3>
+        <button class="icon-btn" id="adminModalClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="adminModalForm" class="admin-modal-form"></form>
+      <div class="admin-modal-foot">
+        <button type="button" class="btn btn-outline" id="adminModalCancel">Cancel</button>
+        <button type="submit" form="adminModalForm" class="btn btn-primary"><i class="fa-solid fa-check"></i> Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase (Firestore) — powers shared, synced Admin Dashboard data across every visitor.
+     No login/auth is used: the database is opened for read/write in "test mode" so anyone
+     with the link can view and edit. See the setup comment inside the script below. -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+/* =========================================================
+   DEPARTMENT OF BANKING & FINANCE — UNICAL
+   Vanilla JS — site rendering + interactivity + hidden Admin
+   Dashboard (demo only: state lives in memory for this
+   browser tab, there is no backend or network call).
+   ========================================================= */
+
+/* ---------- tiny helper ---------- */
+function escapeHtml(str){
+  return String(str === undefined || str === null ? '' : str)
+    .replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+/* ---------- seed content (the site's starting data) ---------- */
+let _seed = 1;
+const sid = () => 'seed' + (_seed++);
+function genId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+
+const state = {
+  stats: [
+    { id: sid(), label: 'Students', count: 5000, suffix: '+' },
+    { id: sid(), label: 'Lecturers', count: 40, suffix: '+' },
+    { id: sid(), label: 'Courses Offered', count: 25, suffix: '' },
+    { id: sid(), label: 'Graduate Success', count: 95, suffix: '%' }
+  ],
+  about: [
+    { id: sid(), title: 'Our History', icon: 'fa-solid fa-book-open', text: "Founded to meet Nigeria's growing need for trained banking and finance professionals, the department has produced graduates who now lead commercial banks, the CBN, and financial-technology ventures across the country." },
+    { id: sid(), title: 'Our Vision', icon: 'fa-solid fa-eye', text: 'To be a foremost centre of excellence in banking and finance education in Africa, recognised for research that shapes policy and practice in emerging financial markets.' },
+    { id: sid(), title: 'Our Mission', icon: 'fa-solid fa-bullseye', text: 'To equip students with rigorous theoretical grounding and practical, technology-driven skills in banking, investment, and risk management, guided by integrity and innovation.' },
+    { id: sid(), title: 'Our Objectives', icon: 'fa-solid fa-list-check', text: 'To develop analytical thinkers, promote financial inclusion research, foster industry partnerships, and prepare graduates for professional certification in banking and finance.' }
+  ],
+  levels: [
+    { id: sid(), tag: '100 Level', title: 'Year One', courses: 'Principles of Economics I & II\nIntroduction to Banking & Finance\nElements of Accounting\nBusiness Mathematics' },
+    { id: sid(), tag: '200 Level', title: 'Year Two', courses: 'Money & Banking\nApplication of Computer in Banking & Finance\nBusiness Statistics\nFinancial Accounting II' },
+    { id: sid(), tag: '300 Level', title: 'Year Three', courses: 'Commercial Bank Management\nInvestment Analysis\nPublic Finance\nSIWES (Industrial Training)' },
+    { id: sid(), tag: '400 Level', title: 'Final Year', courses: 'International Finance\nRisk Management & Insurance\nResearch Project\nFinancial Statement Analysis' }
+  ],
+  lecturers: [
+    { id: sid(), name: 'Prof. E. B. Okon', position: 'Head of Department', qual: 'Ph.D Finance, M.Sc Banking, B.Sc Economics', spec: 'Monetary Economics', email: 'eb.okon@unical.edu.ng' },
+    { id: sid(), name: 'Dr. F. A. Nnamdi', position: 'Senior Lecturer', qual: 'Ph.D Banking & Finance, M.Sc Investment', spec: 'Investment Analysis', email: 'fa.nnamdi@unical.edu.ng' },
+    { id: sid(), name: 'Dr. M. U. Effiong', position: 'Lecturer I', qual: 'Ph.D Financial Management, M.Sc Accounting', spec: 'Risk Management', email: 'mu.effiong@unical.edu.ng' },
+    { id: sid(), name: 'Mrs. C. I. Bassey', position: 'Lecturer II', qual: 'M.Sc Banking & Finance, B.Sc Economics', spec: 'Financial Technology', email: 'ci.bassey@unical.edu.ng' }
+  ],
+  features: [
+    { id: sid(), icon: 'fa-solid fa-book', title: 'Course Materials', text: 'Slides, notes and handouts by course code.' },
+    { id: sid(), icon: 'fa-solid fa-file-circle-question', title: 'Past Questions', text: 'Archived exam and test questions.' },
+    { id: sid(), icon: 'fa-solid fa-calculator', title: 'GPA Calculator', text: 'Compute your semester GPA instantly.' },
+    { id: sid(), icon: 'fa-solid fa-chart-simple', title: 'CGPA Calculator', text: 'Track your cumulative GPA across sessions.' },
+    { id: sid(), icon: 'fa-regular fa-calendar-days', title: 'Academic Calendar', text: 'Key dates for the current session.' },
+    { id: sid(), icon: 'fa-solid fa-clipboard-list', title: 'Registration Guide', text: 'Step-by-step course registration help.' },
+    { id: sid(), icon: 'fa-solid fa-hand-holding-dollar', title: 'Scholarships', text: 'Open funding and scholarship opportunities.' },
+    { id: sid(), icon: 'fa-solid fa-briefcase', title: 'Internships', text: 'SIWES placements and job openings.' },
+    { id: sid(), icon: 'fa-solid fa-spell-check', title: 'Banking Dictionary', text: 'Key finance terms explained simply.' },
+    { id: sid(), icon: 'fa-solid fa-percent', title: 'Financial Calculator', text: 'Loan, interest and investment tools.' },
+    { id: sid(), icon: 'fa-regular fa-clock', title: 'Timetable', text: 'Your weekly lecture schedule.' },
+    { id: sid(), icon: 'fa-solid fa-tower-broadcast', title: 'Announcements', text: 'Official updates from the department.' }
+  ],
+  resources: [
+    { id: sid(), icon: 'fa-solid fa-file-lines', title: 'Lecture Notes', text: 'Departmentally approved course notes.' },
+    { id: sid(), icon: 'fa-solid fa-lightbulb', title: 'Project Topics', text: 'Approved final-year project topics list.' },
+    { id: sid(), icon: 'fa-solid fa-chalkboard-user', title: 'Seminar Materials', text: 'Presentations from departmental seminars.' },
+    { id: sid(), icon: 'fa-solid fa-industry', title: 'SIWES Information', text: 'Guidelines for industrial training.' },
+    { id: sid(), icon: 'fa-solid fa-book-bookmark', title: 'Student Handbook', text: 'Rules, grading and programme structure.' },
+    { id: sid(), icon: 'fa-solid fa-cloud-arrow-down', title: 'Download Centre', text: 'All departmental forms in one place.' }
+  ],
+  news: [
+    { id: sid(), date: 'JUL 26', icon: 'fa-solid fa-newspaper', tag: 'Academics', title: 'Second Semester Registration Timeline Released', text: 'The department has published the registration window for all levels ahead of resumption.' },
+    { id: sid(), date: 'JUL 18', icon: 'fa-solid fa-award', tag: 'Achievement', title: 'UNICAL Student Shortlisted for CIBN National Essay Competition', text: "A 200-level student's essay on next-generation banking innovation advances to the next stage." },
+    { id: sid(), date: 'JUL 10', icon: 'fa-solid fa-chalkboard-user', tag: 'Seminar', title: 'Departmental Seminar on Fraud Detection with Machine Learning', text: 'Faculty and final-year students discussed applications of ML in modern banking fraud detection.' },
+    { id: sid(), date: 'JUN 30', icon: 'fa-solid fa-handshake', tag: 'Partnership', title: 'Department Signs MoU with Local Fintech Firm for Internships', text: 'New industrial training placements now open for 300-level students this session.' },
+    { id: sid(), date: 'JUN 21', icon: 'fa-solid fa-trophy', tag: 'Result', title: 'FIN 215 Results Now Available on the Portal', text: 'Students can check Application of Computer in Banking and Finance results via the Student Portal.' },
+    { id: sid(), date: 'JUN 12', icon: 'fa-solid fa-graduation-cap', tag: 'Convocation', title: '95% of Final-Year Class Graduate with Employment Offers', text: 'The department records another strong outcome for its graduating class this session.' }
+  ],
+  events: [
+    { id: sid(), day: '03', month: 'AUG', title: 'Second Semester Registration Opens', location: 'Department Portal · All Levels', tag: 'Academic' },
+    { id: sid(), day: '12', month: 'AUG', title: 'Guest Lecture: Digital Banking in Nigeria', location: 'Faculty Auditorium · 10:00 AM', tag: 'Seminar' },
+    { id: sid(), day: '20', month: 'AUG', title: 'Final-Year Project Defence Begins', location: 'Department Boardroom', tag: 'Final Year' },
+    { id: sid(), day: '05', month: 'SEP', title: 'Departmental Career Fair', location: 'Main Amphitheatre · All Levels', tag: 'Career' }
+  ],
+  gallery: [
+    { id: sid(), icon: 'fa-solid fa-graduation-cap', caption: 'Convocation 2025' },
+    { id: sid(), icon: 'fa-solid fa-chalkboard-user', caption: 'Departmental Seminar' },
+    { id: sid(), icon: 'fa-solid fa-people-group', caption: "Freshers' Orientation" },
+    { id: sid(), icon: 'fa-solid fa-building-columns', caption: 'Faculty Building' },
+    { id: sid(), icon: 'fa-solid fa-handshake', caption: 'Industry Partnership Day' },
+    { id: sid(), icon: 'fa-solid fa-microphone', caption: 'Guest Lecture Series' },
+    { id: sid(), icon: 'fa-solid fa-trophy', caption: 'Best Graduating Set' },
+    { id: sid(), icon: 'fa-solid fa-users-line', caption: 'Alumni Reunion' }
+  ],
+  testimonials: [
+    { id: sid(), initials: 'AI', name: 'Amara Inyang', role: '400 Level, Banking & Finance', quote: "The department's practical approach to financial analysis gave me the confidence to intern at a commercial bank in my third year." },
+    { id: sid(), initials: 'EU', name: 'Emmanuel Udoh', role: '300 Level, Banking & Finance', quote: "Lecturers here don't just teach theory — they connect every course to what's happening in Nigeria's financial sector right now." },
+    { id: sid(), initials: 'CB', name: 'Chidinma Bassey', role: '200 Level, Banking & Finance', quote: 'The GPA calculator and course materials on this portal have saved me so much time every semester.' }
+  ],
+  faq: [
+    { id: sid(), question: 'How do I access my course materials?', answer: 'Open Course Materials under the Student Portal section, where notes are organised by course code and level.' },
+    { id: sid(), question: 'How is my CGPA calculated?', answer: 'Use the CGPA Calculator under the Student Portal section. It combines all your semester GPAs weighted by credit units automatically.' },
+    { id: sid(), question: 'When does SIWES take place?', answer: 'Industrial training (SIWES) typically runs after 300 level. Full guidelines are available in the Resources section.' },
+    { id: sid(), question: 'Who do I contact for academic advising?', answer: 'Reach out to your level adviser listed on the Lecturers page, or visit the department office during office hours.' },
+    { id: sid(), question: 'How do I apply for departmental scholarships?', answer: 'Open opportunities are listed under Scholarships in the Student Portal, updated as new funding becomes available.' }
+  ]
+};
+const defaults = JSON.parse(JSON.stringify(state));
+
+/* =========================================================
+   SHARED / SYNCED DATA SETUP (Firebase Firestore, no login)
+   ---------------------------------------------------------
+   1. Go to https://console.firebase.google.com → Add project
+      (free tier, no card required for this usage level).
+   2. In the project: Build → Firestore Database → Create
+      database → START IN TEST MODE (this is what removes the
+      need for any login — everyone can read/write for now).
+   3. Project settings (gear icon) → General → scroll to
+      "Your apps" → Add app → Web (</>) → copy the config
+      object it gives you.
+   4. Paste those values into firebaseConfig below, replacing
+      the placeholders. Re-upload/host the file — that's it.
+   Until real values are pasted in, the site quietly runs in
+   local-only mode (no crash, no sync) so it still works fine
+   for solo testing.
+   ========================================================= */
+const firebaseConfig = {
+ apiKey: "AIzaSyCM1c3G7PUhB6SVTD2TsYhSE1C5IeEQnEc",
+    authDomain: "bf-unical-dept.firebaseapp.com",
+    projectId: "bf-unical-dept",
+    storageBucket: "bf-unical-dept.firebasestorage.app",
+    messagingSenderId: "249590184377",
+    appId: "1:249590184377:web:2f6ceaf01531cf7b5a5e68"
+};
+const FIREBASE_READY = !!(firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf('YOUR_') === -1);
+let cloudDocRef = null;
+let cloudSyncOK = false;
+
+function initCloud(){
+  if (!FIREBASE_READY || typeof firebase === 'undefined') return Promise.resolve(false);
+  try {
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    cloudDocRef = db.collection('bfDeptSite').doc('content');
+    return cloudDocRef.get().then(snap => {
+      if (snap.exists){
+        Object.assign(state, snap.data());
+      } else {
+        return cloudDocRef.set(state).catch(() => {});
+      }
+      cloudSyncOK = true;
+      return true;
+    }).catch(err => { console.warn('Cloud sync unavailable, running local-only:', err.message); return false; });
+  } catch (err){
+    console.warn('Cloud sync unavailable, running local-only:', err.message);
+    return Promise.resolve(false);
+  }
+}
+function syncToCloud(){
+  if (!cloudDocRef) return;
+  cloudDocRef.set(state).catch(err => {
+    console.warn('Could not save to the shared database:', err.message);
+    alert("Couldn't save that change to the shared database — check your internet connection and try again.");
+  });
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ---------- Page loader ---------- */
+  const loader = document.getElementById('loader');
+  window.addEventListener('load', () => {
+    setTimeout(() => loader.classList.add('hide'), 500);
+  });
+  // fallback in case 'load' already fired
+  setTimeout(() => loader.classList.add('hide'), 2500);
+
+  /* ---------- Footer year ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- Scroll-reveal + counter observers (declared before first render) ---------- */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  function observeReveals(){ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el)); }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = 1600;
+        const start = performance.now();
+        function step(now){
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(eased * target).toLocaleString() + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+          else el.textContent = target.toLocaleString() + suffix;
+        }
+        requestAnimationFrame(step);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  function observeCounters(){ document.querySelectorAll('.stat-num').forEach(el => counterObserver.observe(el)); }
+
+  /* ---------- Render functions: turn state → live markup ---------- */
+  function renderStats(){
+    document.getElementById('statsGrid').innerHTML = state.stats.map(s => `
+      <div class="stat-card reveal">
+        <div class="stat-num" data-count="${escapeHtml(s.count)}" data-suffix="${escapeHtml(s.suffix)}">0</div>
+        <div class="stat-label">${escapeHtml(s.label)}</div>
+      </div>`).join('');
+    observeReveals(); observeCounters();
+  }
+  function renderAbout(){
+    document.getElementById('aboutGrid').innerHTML = state.about.map(a => `
+      <div class="info-card reveal">
+        <div class="info-icon"><i class="${escapeHtml(a.icon)}"></i></div>
+        <h3>${escapeHtml(a.title)}</h3>
+        <p>${escapeHtml(a.text)}</p>
+      </div>`).join('');
+    observeReveals();
+  }
+  function renderLevels(){
+    document.getElementById('levelGrid').innerHTML = state.levels.map(l => {
+      const items = (l.courses || '').split('\n').filter(Boolean)
+        .map(c => `<li><i class="fa-solid fa-circle"></i>${escapeHtml(c)}</li>`).join('');
+      return `<div class="level-card reveal">
+        <div class="level-head"><span class="lvl-tag">${escapeHtml(l.tag)}</span><h3>${escapeHtml(l.title)}</h3></div>
+        <div class="level-body"><ul>${items}</ul><a href="#" class="btn btn-outline">View Courses</a></div>
+      </div>`;
+    }).join('');
+    observeReveals();
+  }
+  function renderLecturers(){
+    document.getElementById('lecturerGrid').innerHTML = state.lecturers.map(l => `
+      <div class="lect-card reveal">
+        <div class="lect-photo"><i class="fa-solid fa-user-tie"></i></div>
+        <div class="lect-body">
+          <h4>${escapeHtml(l.name)}</h4>
+          <div class="lect-pos">${escapeHtml(l.position)}</div>
+          <p class="lect-qual">${escapeHtml(l.qual)}</p>
+          <p class="lect-spec"><strong>Specialisation:</strong> ${escapeHtml(l.spec)}</p>
+          <a href="mailto:${escapeHtml(l.email)}" class="mail-btn"><i class="fa-solid fa-envelope"></i> Email</a>
+        </div>
+      </div>`).join('');
+    observeReveals();
+  }
+  function renderCardGrid(targetId, items){
+    document.getElementById(targetId).innerHTML = items.map(it => `
+      <div class="feature-card reveal"><i class="${escapeHtml(it.icon)}"></i><h4>${escapeHtml(it.title)}</h4><p>${escapeHtml(it.text)}</p></div>
+    `).join('');
+    observeReveals();
+  }
+  function renderNews(){
+    document.getElementById('newsGrid').innerHTML = state.news.map(n => `
+      <div class="news-card reveal">
+        <div class="news-img"><span class="news-date mono">${escapeHtml(n.date)}</span><i class="${escapeHtml(n.icon || 'fa-solid fa-newspaper')}"></i></div>
+        <div class="news-body">
+          <span class="news-tag">${escapeHtml(n.tag)}</span>
+          <h3>${escapeHtml(n.title)}</h3>
+          <p>${escapeHtml(n.text)}</p>
+          <a href="#" class="news-link">Read more <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>`).join('');
+    observeReveals();
+  }
+  function renderEvents(){
+    document.getElementById('eventsList').innerHTML = state.events.map(ev => `
+      <div class="event-row reveal">
+        <div class="event-date"><div class="ed-day mono">${escapeHtml(ev.day)}</div><div class="ed-mon">${escapeHtml(ev.month)}</div></div>
+        <div class="event-info"><h4>${escapeHtml(ev.title)}</h4><p><i class="fa-solid fa-location-dot"></i>${escapeHtml(ev.location)}</p></div>
+        <div class="event-tag">${escapeHtml(ev.tag)}</div>
+      </div>`).join('');
+    observeReveals();
+  }
+  function renderGallery(){
+    document.getElementById('galleryGrid').innerHTML = state.gallery.map(g => `
+      <div class="g-item reveal"><i class="${escapeHtml(g.icon)}"></i><div class="g-overlay"><span>${escapeHtml(g.caption)}</span></div></div>
+    `).join('');
+    observeReveals();
+  }
+  function renderFaq(){
+    document.getElementById('faqList').innerHTML = state.faq.map(f => `
+      <div class="faq-item reveal">
+        <div class="faq-q">${escapeHtml(f.question)} <i class="fa-solid fa-plus"></i></div>
+        <div class="faq-a"><p>${escapeHtml(f.answer)}</p></div>
+      </div>`).join('');
+    observeReveals();
+  }
+
+  /* ---------- Testimonial carousel (rebuildable) ---------- */
+  let testiCurrent = 0, testiTimer = null;
+  function goToSlide(i){
+    const slidesWrap = document.getElementById('testiSlides');
+    const dotsWrap = document.getElementById('testiDots');
+    const len = slidesWrap.children.length;
+    if (!len) return;
+    testiCurrent = (i + len) % len;
+    slidesWrap.style.transform = `translateX(-${testiCurrent * 100}%)`;
+    [...dotsWrap.children].forEach((d, idx) => d.classList.toggle('active', idx === testiCurrent));
+  }
+  function renderTestimonials(){
+    document.getElementById('testiSlides').innerHTML = state.testimonials.map(t => `
+      <div class="testi-slide">
+        <div class="testi-card">
+          <i class="fa-solid fa-quote-left"></i>
+          <p>${escapeHtml(t.quote)}</p>
+          <div class="testi-person">
+            <div class="testi-avatar">${escapeHtml(t.initials)}</div>
+            <div><div class="testi-name">${escapeHtml(t.name)}</div><div class="testi-role">${escapeHtml(t.role)}</div></div>
+          </div>
+        </div>
+      </div>`).join('');
+    const dotsWrap = document.getElementById('testiDots');
+    dotsWrap.innerHTML = '';
+    testiCurrent = 0;
+    document.getElementById('testiSlides').style.transform = 'translateX(0)';
+    const slides = document.getElementById('testiSlides').children;
+    for (let i = 0; i < slides.length; i++){
+      const dot = document.createElement('span');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsWrap.appendChild(dot);
+    }
+    clearInterval(testiTimer);
+    testiTimer = setInterval(() => goToSlide(testiCurrent + 1), 6000);
+  }
+  document.getElementById('testiPrev').addEventListener('click', () => goToSlide(testiCurrent - 1));
+  document.getElementById('testiNext').addEventListener('click', () => goToSlide(testiCurrent + 1));
+  document.querySelector('.testi-wrap').addEventListener('mouseenter', () => clearInterval(testiTimer));
+  document.querySelector('.testi-wrap').addEventListener('mouseleave', () => { testiTimer = setInterval(() => goToSlide(testiCurrent + 1), 6000); });
+
+  function renderAll(){
+    renderStats(); renderAbout(); renderLevels(); renderLecturers();
+    renderCardGrid('featuresGrid', state.features);
+    renderCardGrid('resourcesGrid', state.resources);
+    renderNews(); renderEvents(); renderGallery(); renderTestimonials(); renderFaq();
+  }
+  renderAll(); // instant paint with local seed content, so the page never looks blank
+
+  /* ---------- Connect to the shared database, then re-render with the real synced content ---------- */
+  const syncStatusEl = document.getElementById('adminSyncStatus');
+  function setSyncStatus(mode){
+    if (mode === 'live'){
+      syncStatusEl.innerHTML = '<i class="fa-solid fa-tower-broadcast"></i> Live — every edit here is visible to everyone on the site.';
+    } else if (mode === 'error'){
+      syncStatusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Could not reach the shared database — check your connection.';
+    } else {
+      syncStatusEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Shared database not configured yet — changes stay in this browser only. See the firebaseConfig comment in the code.';
+    }
+  }
+  initCloud().then(ok => {
+    if (ok){
+      renderAll();
+      setSyncStatus('live');
+      if (cloudDocRef){
+        cloudDocRef.onSnapshot(snap => {
+          if (!snap.exists) return;
+          Object.assign(state, snap.data());
+          renderAll();
+          if (document.getElementById('adminOverlay').classList.contains('open')){
+            renderAdminTable(currentAdminTab);
+          }
+        }, err => { console.warn('Realtime sync error:', err.message); setSyncStatus('error'); });
+      }
+    } else {
+      setSyncStatus(FIREBASE_READY ? 'error' : 'off');
+    }
+  });
+
+  /* =====================================================
+     HIDDEN ADMIN DASHBOARD — shared & synced (Firebase),
+     no login/auth. Every "major section" below is wired to
+     the render functions above, so Add / Edit / Delete
+     updates the live page instantly for every visitor.
+     ===================================================== */
+  const sectionsConfig = [
+    { key:'stats', label:'Statistics', icon:'fa-solid fa-chart-line', desc:'The four animated counters near the top of the homepage.',
+      fields:[{key:'label',label:'Label',type:'text'},{key:'count',label:'Count',type:'number'},{key:'suffix',label:'Suffix (e.g. + or %)',type:'text'}],
+      render: renderStats },
+    { key:'about', label:'About Cards', icon:'fa-solid fa-circle-info', desc:'History, Vision, Mission and Objectives cards.',
+      fields:[{key:'title',label:'Title',type:'text'},{key:'icon',label:'Icon class (Font Awesome)',type:'text'},{key:'text',label:'Description',type:'textarea'}],
+      render: renderAbout },
+    { key:'levels', label:'Academic Levels', icon:'fa-solid fa-graduation-cap', desc:'The four academic-level cards and their course lists.',
+      fields:[{key:'title',label:'Level title',type:'text'},{key:'tag',label:'Tag (e.g. 100 Level)',type:'text'},{key:'courses',label:'Courses (one per line)',type:'textarea'}],
+      render: renderLevels },
+    { key:'lecturers', label:'Lecturers', icon:'fa-solid fa-chalkboard-user', desc:'Faculty profile cards.',
+      fields:[{key:'name',label:'Name',type:'text'},{key:'position',label:'Position',type:'text'},{key:'qual',label:'Qualification',type:'text'},{key:'spec',label:'Specialisation',type:'text'},{key:'email',label:'Email',type:'text'}],
+      render: renderLecturers },
+    { key:'features', label:'Student Portal Features', icon:'fa-solid fa-list-check', desc:'Feature cards under the Student Portal section.',
+      fields:[{key:'title',label:'Title',type:'text'},{key:'icon',label:'Icon class',type:'text'},{key:'text',label:'Description',type:'textarea'}],
+      render: () => renderCardGrid('featuresGrid', state.features) },
+    { key:'resources', label:'Department Resources', icon:'fa-solid fa-folder-open', desc:'Download and reference-material cards.',
+      fields:[{key:'title',label:'Title',type:'text'},{key:'icon',label:'Icon class',type:'text'},{key:'text',label:'Description',type:'textarea'}],
+      render: () => renderCardGrid('resourcesGrid', state.resources) },
+    { key:'news', label:'Latest News', icon:'fa-solid fa-newspaper', desc:'News cards in the News section.',
+      fields:[{key:'title',label:'Headline',type:'text'},{key:'tag',label:'Tag',type:'text'},{key:'date',label:'Date label (e.g. JUL 26)',type:'text'},{key:'icon',label:'Icon class',type:'text'},{key:'text',label:'Summary',type:'textarea'}],
+      render: renderNews },
+    { key:'events', label:'Events', icon:'fa-solid fa-calendar-days', desc:'Upcoming departmental events.',
+      fields:[{key:'title',label:'Event title',type:'text'},{key:'day',label:'Day (e.g. 03)',type:'text'},{key:'month',label:'Month (e.g. AUG)',type:'text'},{key:'location',label:'Location / time',type:'text'},{key:'tag',label:'Tag',type:'text'}],
+      render: renderEvents },
+    { key:'gallery', label:'Gallery', icon:'fa-solid fa-images', desc:'Gallery tiles.',
+      fields:[{key:'caption',label:'Caption',type:'text'},{key:'icon',label:'Icon class',type:'text'}],
+      render: renderGallery },
+    { key:'testimonials', label:'Testimonials', icon:'fa-solid fa-quote-right', desc:'Student testimonial slides.',
+      fields:[{key:'name',label:'Student name',type:'text'},{key:'role',label:'Role / level',type:'text'},{key:'initials',label:'Avatar initials',type:'text'},{key:'quote',label:'Quote',type:'textarea'}],
+      render: renderTestimonials },
+    { key:'faq', label:'FAQ', icon:'fa-solid fa-circle-question', desc:'Frequently asked questions accordion.',
+      fields:[{key:'question',label:'Question',type:'text'},{key:'answer',label:'Answer',type:'textarea'}],
+      render: renderFaq }
+  ];
+
+  const getCfg = key => sectionsConfig.find(s => s.key === key);
+  let currentAdminTab = 'stats';
+  let editingId = null;
+
+  function renderAdminTabs(){
+    const tabsWrap = document.getElementById('adminTabs');
+    tabsWrap.innerHTML = sectionsConfig.map(s => `<button type="button" class="admin-tab ${s.key === currentAdminTab ? 'active' : ''}" data-key="${s.key}"><i class="${s.icon}"></i> ${s.label}</button>`).join('');
+    tabsWrap.querySelectorAll('.admin-tab').forEach(btn => btn.addEventListener('click', () => selectAdminTab(btn.dataset.key)));
+  }
+  function selectAdminTab(key){
+    currentAdminTab = key;
+    renderAdminTabs();
+    const cfg = getCfg(key);
+    document.getElementById('adminSectionTitle').textContent = cfg.label;
+    document.getElementById('adminSectionDesc').textContent = cfg.desc;
+    renderAdminTable(key);
+  }
+  function renderAdminTable(key){
+    const cfg = getCfg(key);
+    const wrap = document.getElementById('adminTableWrap');
+    const items = state[key];
+    if (!items.length){
+      wrap.innerHTML = '<table class="admin-table"><tbody><tr class="admin-empty-row"><td>No items yet — click "Add new" to create one.</td></tr></tbody></table>';
+      return;
+    }
+    const rows = items.map(item => {
+      const mainKey = cfg.fields[0].key;
+      const subFields = cfg.fields.slice(1);
+      const title = escapeHtml(item[mainKey]);
+      const subs = subFields.map(f => {
+        let val = String(item[f.key] === undefined ? '' : item[f.key]);
+        if (val.length > 80) val = val.slice(0, 80) + '…';
+        return `<div class="admin-cell-sub"><strong>${escapeHtml(f.label)}:</strong> ${escapeHtml(val)}</div>`;
+      }).join('');
+      return `<tr>
+        <td><div class="admin-cell-title">${title}</div>${subs}</td>
+        <td class="admin-actions-cell">
+          <button type="button" class="admin-icon-action" data-action="edit" data-id="${item.id}" title="Edit"><i class="fa-solid fa-pen"></i></button>
+          <button type="button" class="admin-icon-action danger" data-action="delete" data-id="${item.id}" title="Delete"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>`;
+    }).join('');
+    wrap.innerHTML = `<table class="admin-table"><thead><tr><th>Details</th><th style="text-align:right;">Actions</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+  document.getElementById('adminTableWrap').addEventListener('click', (e) => {
+    const btn = e.target.closest('.admin-icon-action');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    if (btn.dataset.action === 'edit'){
+      openModal('edit', id);
+    } else if (btn.dataset.action === 'delete'){
+      if (confirm('Delete this item? This removes it for everyone viewing the site.')){
+        state[currentAdminTab] = state[currentAdminTab].filter(i => i.id !== id);
+        getCfg(currentAdminTab).render();
+        renderAdminTable(currentAdminTab);
+        syncToCloud();
+      }
+    }
+  });
+
+  function openModal(mode, id){
+    editingId = mode === 'edit' ? id : null;
+    const cfg = getCfg(currentAdminTab);
+    const item = mode === 'edit' ? state[currentAdminTab].find(i => i.id === id) : {};
+    document.getElementById('adminModalTitle').textContent = (mode === 'edit' ? 'Edit — ' : 'Add — ') + cfg.label;
+    const form = document.getElementById('adminModalForm');
+    form.innerHTML = cfg.fields.map(f => {
+      const val = escapeHtml(item[f.key] === undefined ? '' : item[f.key]);
+      if (f.type === 'textarea'){
+        return `<div class="form-group"><label>${escapeHtml(f.label)}</label><textarea name="${f.key}" rows="4">${val}</textarea></div>`;
+      }
+      return `<div class="form-group"><label>${escapeHtml(f.label)}</label><input type="${f.type === 'number' ? 'number' : 'text'}" name="${f.key}" value="${val}"></div>`;
+    }).join('');
+    document.getElementById('adminModalBackdrop').classList.add('open');
+  }
+  function closeModal(){
+    document.getElementById('adminModalBackdrop').classList.remove('open');
+    editingId = null;
+  }
+  document.getElementById('adminModalForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const cfg = getCfg(currentAdminTab);
+    const formData = new FormData(e.target);
+    const obj = {};
+    cfg.fields.forEach(f => {
+      const v = formData.get(f.key) || '';
+      obj[f.key] = f.type === 'number' ? (Number(v) || 0) : v;
+    });
+    if (editingId !== null){
+      const idx = state[currentAdminTab].findIndex(i => i.id === editingId);
+      if (idx > -1) state[currentAdminTab][idx] = Object.assign({}, state[currentAdminTab][idx], obj);
+    } else {
+      obj.id = genId();
+      state[currentAdminTab].push(obj);
+    }
+    cfg.render();
+    renderAdminTable(currentAdminTab);
+    syncToCloud();
+    closeModal();
+  });
+  document.getElementById('adminModalClose').addEventListener('click', closeModal);
+  document.getElementById('adminModalCancel').addEventListener('click', closeModal);
+  document.getElementById('adminModalBackdrop').addEventListener('click', (e) => { if (e.target.id === 'adminModalBackdrop') closeModal(); });
+
+  document.getElementById('adminAddBtn').addEventListener('click', () => openModal('add'));
+  document.getElementById('adminResetBtn').addEventListener('click', () => {
+    if (confirm('Reset this section back to its original content? This affects everyone viewing the site.')){
+      state[currentAdminTab] = JSON.parse(JSON.stringify(defaults[currentAdminTab]));
+      getCfg(currentAdminTab).render();
+      renderAdminTable(currentAdminTab);
+      syncToCloud();
+    }
+  });
+
+  function openAdmin(){
+    document.getElementById('adminOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    selectAdminTab(currentAdminTab);
+  }
+  function closeAdmin(){
+    document.getElementById('adminOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    closeModal();
+  }
+  document.getElementById('adminTrigger').addEventListener('click', (e) => { e.preventDefault(); openAdmin(); });
+  document.getElementById('adminCloseBtn').addEventListener('click', closeAdmin);
+  document.getElementById('adminOverlay').addEventListener('click', (e) => { if (e.target.id === 'adminOverlay') closeAdmin(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'a'){ e.preventDefault(); openAdmin(); }
+    if (e.key === 'Escape'){
+      if (document.getElementById('adminModalBackdrop').classList.contains('open')) closeModal();
+      else if (document.getElementById('adminOverlay').classList.contains('open')) closeAdmin();
+    }
+  });
+
+  /* ---------- Sticky header shadow on scroll ---------- */
+  const header = document.getElementById('siteHeader');
+  const scrollTopBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+    scrollTopBtn.classList.toggle('show', window.scrollY > 500);
+  });
+
+  /* ---------- Mobile nav toggle ---------- */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('open');
+  }));
+
+  /* ---------- Dark / light mode ---------- */
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  function applyTheme(theme){
+    root.setAttribute('data-theme', theme);
+    themeToggle.innerHTML = theme === 'dark'
+      ? '<i class="fa-solid fa-sun"></i>'
+      : '<i class="fa-solid fa-moon"></i>';
+  }
+  let savedTheme = 'light';
+  try { savedTheme = window.__theme || 'light'; } catch(e){}
+  applyTheme(savedTheme);
+  themeToggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    window.__theme = next; // in-memory only, no localStorage per artifact rules
+  });
+
+  /* ---------- Search panel ---------- */
+  const searchToggle = document.getElementById('searchToggle');
+  const searchPanel = document.getElementById('searchPanel');
+  searchToggle.addEventListener('click', () => searchPanel.classList.toggle('open'));
+
+  /* ---------- Notification dropdown ---------- */
+  const notifToggle = document.getElementById('notifToggle');
+  const notifPanel = document.getElementById('notifPanel');
+  notifToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    notifPanel.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!notifPanel.contains(e.target) && e.target !== notifToggle) {
+      notifPanel.classList.remove('open');
+    }
+  });
+
+  /* ---------- Floating action menu ---------- */
+  const fabMain = document.getElementById('fabMain');
+  const fabMenu = document.getElementById('fabMenu');
+  fabMain.addEventListener('click', () => {
+    fabMenu.classList.toggle('open');
+    fabMain.style.transform = fabMenu.classList.contains('open') ? 'rotate(45deg)' : 'rotate(0)';
+  });
+
+  /* ---------- Scroll to top ---------- */
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  /* ---------- Ripple effect on buttons (delegated so it also covers admin-added content) ---------- */
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.ripple-btn, .btn-primary, .btn-outline, .btn-ghost-light');
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const circle = document.createElement('span');
+    circle.className = 'ripple';
+    circle.style.left = (e.clientX - rect.left) + 'px';
+    circle.style.top = (e.clientY - rect.top) + 'px';
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(circle);
+    setTimeout(() => circle.remove(), 650);
+  });
+
+  /* ---------- Typing effect (hero headline) ---------- */
+  const typeTarget = document.getElementById('typeTarget');
+  const typeWords = ['Banking & Finance', 'Financial Excellence', 'Future Bankers'];
+  let wIdx = 0, cIdx = 0, deleting = false;
+  typeTarget.classList.add('type-cursor');
+  function typeLoop(){
+    const word = typeWords[wIdx];
+    if (!deleting){
+      cIdx++;
+      typeTarget.textContent = word.slice(0, cIdx);
+      if (cIdx === word.length){ deleting = true; setTimeout(typeLoop, 1600); return; }
+    } else {
+      cIdx--;
+      typeTarget.textContent = word.slice(0, cIdx);
+      if (cIdx === 0){ deleting = false; wIdx = (wIdx + 1) % typeWords.length; }
+    }
+    setTimeout(typeLoop, deleting ? 45 : 90);
+  }
+  typeLoop();
+
+  /* ---------- FAQ accordion (delegated — faqList is re-rendered by admin edits) ---------- */
+  document.getElementById('faqList').addEventListener('click', (e) => {
+    const q = e.target.closest('.faq-q');
+    if (!q) return;
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('#faqList .faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+
+  /* ---------- Contact form (demo submission) ---------- */
+  const contactForm = document.getElementById('contactForm');
+  const formNote = document.getElementById('formNote');
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    formNote.classList.add('show');
+    contactForm.reset();
+    setTimeout(() => formNote.classList.remove('show'), 5000);
+  });
+
+  /* ---------- Smooth scroll for in-page anchors (delegated) ---------- */
+  document.addEventListener('click', function (e) {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    const id = anchor.getAttribute('href');
+    if (id.length > 1){
+      const target = document.querySelector(id);
+      if (target){
+        e.preventDefault();
+        const offset = 90;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    } else {
+      e.preventDefault(); // placeholder "#" links (demo cards) shouldn't jump the page
+    }
+  });
+
+});
+</script>
+</body>
+</html>
